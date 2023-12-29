@@ -5,11 +5,6 @@ const user_schema = new mongoose.Schema({
         required: true,
         trim: false
     },
-    username: {
-        type: String,
-        required: true,
-        trim: true
-    },
     password: {
         type: String,
         requiered: true,
@@ -24,7 +19,6 @@ const user_schema = new mongoose.Schema({
     verified: {
         type: Boolean,
         requiered: true,
-        trim: true
     }
 },
 {
