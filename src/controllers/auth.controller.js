@@ -1,18 +1,26 @@
 import bcrypt from "bcryptjs"
 import User from "../models/user.model.js"
 import { createAccessToken } from "../libs/jwt.js"
+import app from "../firebase/config.js";
+import { getStorage, ref, uploadBytes } from "firebase/storage"
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
+    // storage Firebase
+    const storage = getStorage(app)
     try{
-        const encrypted_password = await bcrypt.hash(password, 10)  
+        const encrypted_password = await bcrypt.hash(password, 10)
         const new_user = new User({
             name,
             email,
             password: encrypted_password,
-            verified: false
+            verified: false,
         })
+        // Save in mongoDB
         const user_saved = await new_user.save()
+        // Save in firebase
+        const storageRef = ref(storage, `users/${user_saved._id}`)
+        uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
         const token = await createAccessToken({id: user_saved._id})
         res.cookie("token", token)
         res.json({

@@ -7,18 +7,18 @@ const user_schema = new mongoose.Schema({
     },
     password: {
         type: String,
-        requiered: true,
+        required: true,
         trim: true
     },
     email: {
         type: String,
-        requiered: true,
+        required: true,
         trim: true,
         unique: true
     },
     verified: {
         type: Boolean,
-        requiered: true,
+        required: true,
     }
 },
 {
