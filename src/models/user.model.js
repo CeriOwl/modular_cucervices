@@ -19,6 +19,11 @@ const user_schema = new mongoose.Schema({
     verified: {
         type: Boolean,
         required: true,
+    },
+    image: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'images',
+        required: false
     }
 },
 {

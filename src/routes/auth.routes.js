@@ -1,6 +1,5 @@
 import { Router } from "express"
-import { login, logout, profile, register } from "../controllers/auth.controller.js"
-import { authRequired } from "../middlewares/validateToken.js"
+import { login, logout, register } from "../controllers/auth.controller.js"
 import multer from "multer"
 
 const router = Router()

@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs"
 import User from "../models/user.model.js"
+import Image from "../models/images.model.js"
 import { createAccessToken } from "../libs/jwt.js"
 import app from "../firebase/config.js";
-import { getStorage, ref, uploadBytes } from "firebase/storage"
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
@@ -20,7 +21,11 @@ export const register = async (req, res) => {
         const user_saved = await new_user.save()
         // Save in firebase
         const storageRef = ref(storage, `users/${user_saved._id}`)
-        uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
+        await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
+        const get_link = await getDownloadURL(storageRef)
+        const new_image = new Image({link: get_link})
+        const image_saved = await new_image.save()
+        await User.findByIdAndUpdate(user_saved._id, {image: image_saved._id})
         const token = await createAccessToken({id: user_saved._id})
         res.cookie("token", token)
         res.json({
@@ -64,19 +69,4 @@ export const logout = (req, res) => {
         expires: new Date(0)
     })
     return res.status(200).json({message: "Log out"})
-}
-
-export const profile = async (req, res) => {
-    const user_found = await User.findById(req.user.id)
-    if(!user_found) {
-        return res.status(400).json({
-            message: "User not found"
-        })
-    }else {
-        return res.json({
-            id: user_found._id,
-            username: user_found.username,
-            email: user_found.email
-        })
-    }
 }
