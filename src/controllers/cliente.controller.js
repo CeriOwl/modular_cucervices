@@ -3,6 +3,7 @@ import Service from "../models/service.model.js"
 import Image from "../models/images.model.js"
 import User from "../models/user.model.js"
 import app from "../firebase/config.js";
+import bcrypt from "bcryptjs"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 export const registerProductService = (req, res) => {
@@ -72,10 +73,30 @@ export const getClient = async (req, res) => {
 }
 
 export const updateClient = async (req, res) => {
-    console.log(req.body)
+    const {name, email, password} = req.body
+    const image = req.file
+    const storage = getStorage(app)
     try {
-        const client = await User.findByIdAndUpdate(req.user.id, req.body, {new: true})
-        console.log(client)
+        //const client = await User.findByIdAndUpdate(req.user.id, req.body, {new: true})
+        if(name) {
+            await User.findByIdAndUpdate(req.user.id, { name })
+        }
+        if(email) {
+            await User.findByIdAndUpdate(req.user.id, { email })
+        }
+        if(password) {
+            const password_enctyped = await bcrypt.hash(password, 10)
+            await User.findByIdAndUpdate(req.user.id, { password: password_enctyped })
+        }
+        if(image) {
+            const user = await User.findById(req.user.id)
+            const image = await Image.findById(user.image)
+            
+            const storageRef = ref(storage, `users/${req.user.id}`)
+            await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
+            const get_link = await getDownloadURL(storageRef)
+            await Image.findByIdAndUpdate(image._id, { link: get_link })
+        }
         res.json({
             message: "Usuario actualizado correctamente"
         })

@@ -38,6 +38,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const { email, password } = req.body
+    console.log(req.body)
     try{
         const user_found = await User.findOne({email})
         if (!user_found) {
@@ -53,7 +54,6 @@ export const login = async (req, res) => {
         }
         
         const token = await createAccessToken({id: user_found._id})
-        
         res.cookie("token", token)
         res.json({
             id: user_found._id,
