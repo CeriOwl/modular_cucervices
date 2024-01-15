@@ -10,6 +10,10 @@ export const register = async (req, res) => {
     // storage Firebase
     const storage = getStorage(app)
     try{
+        const user = User.findOne({ email })
+        if(user) {
+            return res.status(400).json(["Email registrado"])
+        }
         const encrypted_password = await bcrypt.hash(password, 10)
         const new_user = new User({
             name,
