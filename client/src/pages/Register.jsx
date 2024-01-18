@@ -10,6 +10,7 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const { signUp, isAuthenticated, errors: RegisterErrors } = useAuth();
   const navigate = useNavigate();
 
@@ -28,11 +29,7 @@ export default function Register() {
         <div className="flex p-8">
           <div>
             {
-                RegisterErrors.map((error, i) => (
-                    <div className="bg-red-500 text-white" key={i}>
-                        {error}
-                    </div>
-                ))
+              
             }
             <form
               onSubmit={handleSubmit(async (values) => {
