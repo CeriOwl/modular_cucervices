@@ -1,4 +1,7 @@
 import {z} from "zod"
+
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+
 export const registerSchema = z.object({
     email: z.string({
         required_error: "Email es requerido"
@@ -15,7 +18,8 @@ export const registerSchema = z.object({
     }),
     image: z.any({
         required_error: "Imagen es requerida"
-    })
+    }).refine(file => ACCEPTED_IMAGE_TYPES.includes(file?.mimetype),
+    "El archivo debe ser una imagen")
 })
 
 export const loginSchema = z.object({

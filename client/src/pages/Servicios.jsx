@@ -1,16 +1,16 @@
 import axios from "../api/axios.js"
 import { useEffect, useState } from "react"
-import Product from "../components/Product.jsx"
 import Header from "../components/Header.jsx"
+import Service from "../components/Service.jsx"
 
-export default function Ventas() {
-  const [products, setProducts] = useState([])
+export default function Servicio() {
+  const [services, setServices] = useState([])
   
   useEffect(() => {
     async function handleData() {
-      const productsData = await axios.get("http://localhost:3000/api/home-ventas")
-      console.log(productsData)
-      setProducts(productsData.data)
+      const servicesData = await axios.get("http://localhost:3000/api/home-ser")
+      console.log(servicesData)
+      setServices(servicesData.data)
     }handleData()
   }, [])
 
@@ -19,7 +19,7 @@ export default function Ventas() {
       <Header/>
       <div className="grid grid-cols-4 p-10 justify-items-center gap-12">
         {
-          products.map((product, index) => <Product data={product} key={index}/>)
+          services.map((service, index) => <Service data={service} key={index}/>)
         }
       </div>
     </main>

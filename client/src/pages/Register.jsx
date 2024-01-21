@@ -11,7 +11,7 @@ export default function Register() {
     formState: { errors },
   } = useForm();
 
-  const { signUp, isAuthenticated, errors: RegisterErrors } = useAuth();
+  const { signUp, isAuthenticated, errorsSign } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,17 +21,18 @@ export default function Register() {
   }, [isAuthenticated]);
 
   return (
-    <main className="bg-[#01021C]">
-      <div className="grid grid-cols-2 items-center">
-        <div className="">
+    <main className="bg-[#01021C] h-screen grid">
+      <div className="grid grid-cols-2 items-center justify-items-center">
+        <div className="max-w-[36rem]">
           <img className="w-full" src={Logo} alt="" />
         </div>
-        <div className="flex p-8">
+        <div className="flex p-4 border rounded-md mx-12">
           <div>
             {
-              
+              errorsSign.length !== 0 ? <div className="bg-red-500 p-2 rounded-md text-[1.2rem]">{errorsSign[0]}</div> : ""
             }
             <form
+            className="flex flex-col gap-4 w-full"
               onSubmit={handleSubmit(async (values) => {
                 values.image = values.image[0];
                 await signUp(values);
@@ -39,6 +40,7 @@ export default function Register() {
             >
               <div>
                 <input
+                className="bg-transparent border-b p-1 text-[1.5rem] text-white focus:outline-none"
                   placeholder="Ingresa tu nombre"
                   type="text"
                   {...register("name", { required: true })}
@@ -49,6 +51,7 @@ export default function Register() {
               </div>
               <div>
                 <input
+                className="bg-transparent border-b p-1 text-[1.5rem] text-white focus:outline-none"
                   placeholder="Ingresa tu correo"
                   type="email"
                   {...register("email", { required: true })}
@@ -59,6 +62,7 @@ export default function Register() {
               </div>
               <div>
                 <input
+                  className="bg-transparent border-b p-1 text-[1.5rem] text-white focus:outline-none"
                   placeholder="Ingresa tu contraseña"
                   type="password"
                   {...register("password", { required: true })}
@@ -68,8 +72,10 @@ export default function Register() {
                 )}
               </div>
               <div>
+                <label htmlFor="file" className="text-white text-[1.5rem]">Coloca tu foto de perfil</label>
                 <input
-                  placeholder="Coloca tu foto de perfil"
+                  className="bg-transparent text-white focus:outline-none"
+                  id="file"
                   type="file"
                   {...register("image", { required: true })}
                 />
@@ -77,14 +83,14 @@ export default function Register() {
                   <p className="text-red-500">Ingrese una imagen</p>
                 )}
               </div>
-              <button className="text-white" type="submit">
-                Enviar
+              <button className="bg-[#31587A] hover:bg-[#A8DADC] transition-colors text-[1.5rem] rounded-lg text-white hover:text-[#01021C]">
+                Registrarse
               </button>
             </form>
           </div>
           <div className="text-white">
-            <h2 className="font-black uppercase">registrar una cuenta</h2>
-            <p className="">
+            <h2 className="font-black uppercase text-[2rem] text-center">registrar una cuenta</h2>
+            <p className="text-[1.3rem]">
               Este es el momento en que como estudiante puedes obtener un acceso
               inicial en el que puedas entrar a nuestro sitio web para ver
               algunos de los productos y servicios que nos puede ofrecer nuestra

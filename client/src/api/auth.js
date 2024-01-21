@@ -1,7 +1,6 @@
-import axios from "axios"
+import axios from "./axios.js"
+export const login = user => axios.post(`/login`, user)
 
-const API = "http://localhost:3000/api"
+export const registerUser = user => axios.post(`/register`, user, {headers: {'content-type': 'multipart/form-data'}})
 
-export const login = user => axios.post(`${API}/login`, user)
-
-export const registerUser = user => axios.post(`${API}/register`, user, {headers: {'content-type': 'multipart/form-data'}})
+export const verifyTokenRequest = () => axios.get('/verify')

@@ -4,16 +4,21 @@ import Image from "../models/images.model.js"
 import { createAccessToken } from "../libs/jwt.js"
 import app from "../firebase/config.js";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
+import jwt from "jsonwebtoken";
+import {SECRET_KEY} from "../config.js"
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
     // storage Firebase
     const storage = getStorage(app)
     try{
-        const user = User.findOne({ email })
-        if(user) {
-            return res.status(400).json(["Email registrado"])
+        const user_found = await User.findOne({email})
+        if (user_found) {
+            return res.status(400).json({
+                error: "Email en uso"
+            })
         }
+
         const encrypted_password = await bcrypt.hash(password, 10)
         const new_user = new User({
             name,
@@ -47,13 +52,13 @@ export const login = async (req, res) => {
         const user_found = await User.findOne({email})
         if (!user_found) {
             return res.status(400).json({
-                message: "Usuario no encontrado"
+                error: ["Usuario no encontrado"]
             })
         }
         const is_match = await bcrypt.compare(password, user_found.password)
         if (!is_match) {
             return res.status(400).json({
-                message: "Contraseña incorrecta"
+                error: ["Contraseña incorrecta"]
             })
         }
         
@@ -73,4 +78,22 @@ export const logout = (req, res) => {
         expires: new Date(0)
     })
     return res.status(200).json({message: "Log out"})
+}
+
+export const verifyToken = (req, res) => {
+    const {token} =  req.cookies
+    if(!token) return res.status(400).json({message: "No autorizado"})
+    
+    jwt.verify(token, SECRET_KEY, async (err, user) => {
+        if(err) return res.status(401).json({message: "No autorizado"})
+
+        const userFound = await User.findById(user.id)
+        if(!userFound) return res.status(401).json({message: "No autorizado"})
+
+        return res.json({
+            id: userFound._id,
+            name: userFound.name,
+            email: userFound.email
+        })
+    })
 }
