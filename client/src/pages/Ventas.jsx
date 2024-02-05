@@ -2,16 +2,27 @@ import axios from "../api/axios.js"
 import { useEffect, useState } from "react"
 import Product from "../components/Product.jsx"
 import Header from "../components/Header.jsx"
+import { useAuth } from "../context/auth.context.jsx"
+import { useNavigate } from "react-router-dom"
 
 export default function Ventas() {
   const [products, setProducts] = useState([])
-  
+  const {isAuthenticated} = useAuth();
+  const navigation = useNavigate();
+
   useEffect(() => {
     async function handleData() {
       const productsData = await axios.get("http://localhost:3000/api/home-ventas")
       console.log(productsData)
       setProducts(productsData.data)
-    }handleData()
+    }
+
+    if(isAuthenticated) {
+      handleData()
+    } else {
+      navigation("/")
+    }
+
   }, [])
 
   return (

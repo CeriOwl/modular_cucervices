@@ -38,7 +38,7 @@ export const register = async (req, res) => {
         const token = await createAccessToken({id: user_saved._id})
         res.cookie("token", token)
         res.json({
-            message: "Usuario registrado correctamente"
+            data: await User.findOne({email}).populate("image")
         })
     }catch(error) {
         res.status(500).json({message: error.message})
@@ -65,8 +65,7 @@ export const login = async (req, res) => {
         const token = await createAccessToken({id: user_found._id})
         res.cookie("token", token)
         res.json({
-            id: user_found._id,
-            verified: user_found.verified
+            data: await User.findOne({email}).populate("image")
         })
     }catch(error) {
         res.status(500).json({message: error.message})

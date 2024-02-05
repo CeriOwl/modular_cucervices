@@ -6,6 +6,7 @@ import Ventas from "./pages/Ventas.jsx"
 import Servicios from "./pages/Servicios.jsx"
 import IndividualProduct from "./pages/IndividualProduct.jsx"
 import IndividualService from "./pages/IndividualService.jsx"
+import Error from "./pages/Error.jsx"
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route path="/ventas" element={<Ventas />} />
           <Route path="/ventas/:id" element={<IndividualProduct />} />
           <Route path="/servicios" element={<Servicios />} />
-          <Route path="/servicios/:id" element={<IndividualService/>} />
+          <Route path="/servicios/:id" element={<IndividualService />} />
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -3,4 +3,6 @@ export const login = user => axios.post(`/login`, user)
 
 export const registerUser = user => axios.post(`/register`, user, {headers: {'content-type': 'multipart/form-data'}})
 
+export const logOut = () => axios.post('/logout')
+
 export const verifyTokenRequest = () => axios.get('/verify')
