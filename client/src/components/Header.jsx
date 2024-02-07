@@ -25,12 +25,12 @@ export default function Header() {
           <img className="w-full" src={LogoHeader} alt="" />
         </Link>
         <div className="text-white flex gap-3 items-center">
-          <Link to="/" title='Perfil'>
+          <Link to="/perfil" title='Perfil'>
             <img className='w-24 border rounded-full' src={imageUser} alt="" />
           </Link>
           <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Contactos</Link>
           {
-            verified === false ? <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Verificación</Link>
+            verified === false ? <Link to="/verificacion" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Verificación</Link>
             :
             <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors' >Publicar</Link>
           }
