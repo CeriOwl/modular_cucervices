@@ -6,6 +6,7 @@ import { useAuth } from "../context/auth.context.jsx"
 import { useNavigate } from "react-router-dom"
 
 export default function Ventas() {
+  const [isProduct, setIsProduct] = useState(undefined)
   const [products, setProducts] = useState([])
   const {isAuthenticated} = useAuth();
   const navigation = useNavigate();
@@ -13,8 +14,13 @@ export default function Ventas() {
   useEffect(() => {
     async function handleData() {
       const productsData = await axios.get("http://localhost:3000/api/home-ventas")
-      console.log(productsData)
-      setProducts(productsData.data)
+      console.log(productsData.data)
+      if(productsData.data.length > 0) {
+        setProducts(productsData.data)
+        setIsProduct(true)
+      }else {
+        setIsProduct(false)
+      }
     }
 
     if(isAuthenticated) {
@@ -30,7 +36,7 @@ export default function Ventas() {
       <Header/>
       <div className="grid grid-cols-4 p-10 justify-items-center gap-12">
         {
-          products.map((product, index) => <Product data={product} key={index}/>)
+          isProduct !== false ? products.map((product, index) => <Product data={product} key={index}/>) : ""
         }
       </div>
     </main>
