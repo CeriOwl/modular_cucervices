@@ -79,6 +79,15 @@ export const logout = (req, res) => {
     return res.status(200).json({message: "Log out"})
 }
 
+export const verifyUser = (req, res) => {
+    try {
+        console.log(req)
+        return res.status(200).json({message: "Todo al 100"})
+    }catch(error) {
+        return res.status(500).json({error})
+    }
+}
+
 export const verifyToken = (req, res) => {
     const {token} =  req.cookies
     if(!token) return res.status(400).json({message: "No autorizado"})

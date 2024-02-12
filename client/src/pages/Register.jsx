@@ -34,6 +34,7 @@ export default function Register() {
             <form
             className="flex flex-col gap-4 w-full"
               onSubmit={handleSubmit(async (values) => {
+                console.log(values)
                 values.image = values.image[0];
                 await signUp(values);
               })}
