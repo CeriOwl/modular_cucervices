@@ -24,6 +24,19 @@ const user_schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'images',
         required: false
+    },
+    description: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    tel: {
+        type: String,
+        required: false
+    },
+    social: {
+        type: String,
+        required: false
     }
 },
 {

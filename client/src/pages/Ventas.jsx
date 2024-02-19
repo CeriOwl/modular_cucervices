@@ -9,6 +9,7 @@ export default function Ventas() {
   const [isProduct, setIsProduct] = useState(undefined)
   const [products, setProducts] = useState([])
   const {isAuthenticated} = useAuth();
+  console.log(isAuthenticated)
   const navigation = useNavigate();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Ventas() {
         setIsProduct(false)
       }
     }
-
+    
     if(isAuthenticated) {
       handleData()
     } else {
@@ -33,7 +34,6 @@ export default function Ventas() {
 
   return (
     <main className="bg-[#01021C]">
-      <Header/>
       <div className="grid grid-cols-4 p-10 justify-items-center gap-12">
         {
           isProduct !== false ? products.map((product, index) => <Product data={product} key={index}/>) : ""

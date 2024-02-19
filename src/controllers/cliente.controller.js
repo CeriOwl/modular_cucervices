@@ -73,7 +73,7 @@ export const getClient = async (req, res) => {
 }
 
 export const updateClient = async (req, res) => {
-    const {name, email, password} = req.body
+    const {name, email, password, description, social, tel} = req.body
     const image = req.file
     const storage = getStorage(app)
     try {
@@ -84,11 +84,11 @@ export const updateClient = async (req, res) => {
         if(email) {
             await User.findByIdAndUpdate(req.user.id, { email })
         }
-        if(password) {
+        if(password !== '') {
             const password_enctyped = await bcrypt.hash(password, 10)
             await User.findByIdAndUpdate(req.user.id, { password: password_enctyped })
         }
-        if(image) {
+        if(image !== undefined) {
             const user = await User.findById(req.user.id)
             const image = await Image.findById(user.image)
             
@@ -96,6 +96,15 @@ export const updateClient = async (req, res) => {
             await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
             const get_link = await getDownloadURL(storageRef)
             await Image.findByIdAndUpdate(image._id, { link: get_link })
+        }
+        if(description !== '' || description !== undefined) {
+            await User.findByIdAndUpdate(req.user.id, { description })
+        }
+        if(social !== '' || social !== undefined) {
+            await User.findByIdAndUpdate(req.user.id, { social })
+        }
+        if(tel !== '' || tel !== undefined) {
+            await User.findByIdAndUpdate(req.user.id, { tel })
         }
         res.json({
             message: "Usuario actualizado correctamente"

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {registerUser, login, verifyTokenRequest, logOut, verifyUser} from "../api/auth.js"
+import {registerUser, login, verifyTokenRequest, logOut, verifyUser, updateUserInfo} from "../api/auth.js"
 import Cookies from "js-cookie"
 
 export const AuthContext = createContext()
@@ -16,6 +16,7 @@ export const AuthProvider = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [errorsSign, setErrorsSign] = useState([])
     const [errorsSignIn, setErrorsSignIn] = useState([])
+    const [verification, setVerification] = useState(undefined)
 
     const signUp = async (user) => {
         try {
@@ -52,6 +53,13 @@ export const AuthProvider = ({children}) => {
     const verify = async (data) => {
         try {
             const res = await verifyUser(data)
+            if(res.data.message) {
+                setVerification(true)
+                const newInfo = await updateUserInfo({id: user.data._id})
+                setUser({data: newInfo.data[0]})
+            } else {
+                setVerification(false)
+            }
         } catch(error) {
             console.log(error)
         }
@@ -85,7 +93,8 @@ export const AuthProvider = ({children}) => {
             isAuthenticated,
             errorsSign,
             errorsSignIn,
-            verify
+            verify,
+            verification
         }}>
             {children}
         </AuthContext.Provider>

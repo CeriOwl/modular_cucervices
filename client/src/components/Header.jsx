@@ -5,14 +5,20 @@ import { useAuth } from '../context/auth.context.jsx'
 
 export default function Header() {
   const navigate = useNavigate();
-  const {logOutUser, user} = useAuth();
+  const {logOutUser, user, isAuthenticated} = useAuth();
   const [imageUser, setImageUser] = useState("#")
   const [verified, setVerified] = useState("")
-  
+
   useEffect(() => {
-    setImageUser(user.data.image.link)
-    setVerified(user.data.verified)
-  }, [user.data.verified, user.data.image.link])
+    
+    if(isAuthenticated) {
+      setImageUser(user.data.image.link)
+      setVerified(user.data.verified)
+    } else {
+      setImageUser("")
+      setVerified(false)
+    }
+  }, [user])
 
   const logOut = async () => {
     await logOutUser()
@@ -20,13 +26,13 @@ export default function Header() {
   }
   
   return (
-    <div className="px-8 py-6 border-b flex justify-between">
+    <div className="bg-[#01021C] px-8 py-6 border-b flex justify-between">
         <Link to='/' className="max-w-[32rem]">
           <img className="w-full" src={LogoHeader} alt="" />
         </Link>
         <div className="text-white flex gap-3 items-center">
           <Link to="/perfil" title='Perfil'>
-            <img className='w-24 border rounded-full' src={imageUser} alt="" />
+            <img className='w-24 border rounded-full aspect-square' src={imageUser} alt="" />
           </Link>
           <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Contactos</Link>
           {

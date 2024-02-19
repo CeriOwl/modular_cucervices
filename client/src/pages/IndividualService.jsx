@@ -31,7 +31,6 @@ export default function IndividualService() {
 
   return (
     <main className="bg-[#01021C] h-screen">
-      <Header/>
       <div className="text-white grid grid-cols-2 justify-items-center items-center mt-12">
         <div className="flex flex-col border rounded-md items-center p-6">
           <h2 className="uppercase font-bold text-[2.7rem]">Servicio</h2>

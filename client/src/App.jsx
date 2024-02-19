@@ -1,4 +1,4 @@
-import {BrowserRouter, Route, Routes} from "react-router-dom"
+import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom"
 import { AuthProvider } from "./context/auth.context.jsx"
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
@@ -10,11 +10,15 @@ import Verificacion from "./pages/Verificacion.jsx"
 import Perfil from "./pages/Perfil.jsx"
 import UpdateProfile from "./pages/UpdateProfile.jsx"
 import Error from "./pages/Error.jsx"
+import Header from "./components/Header.jsx"
 
 function App() {
+  const {pathname} = useLocation()
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <>
+    {
+      pathname !== "/" ? <Header/> : ""
+    }
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -27,8 +31,7 @@ function App() {
           <Route path="/update/profile" element={<UpdateProfile />} />
           <Route path="*" element={<Error />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+  </>
   )
 }
 

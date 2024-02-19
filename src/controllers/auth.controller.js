@@ -6,6 +6,7 @@ import app from "../firebase/config.js";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
 import jwt from "jsonwebtoken";
 import {SECRET_KEY} from "../config.js"
+import { iaVerify } from "../../client/src/api/ia.js";
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
@@ -47,7 +48,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const { email, password } = req.body
-    console.log(req.body)
     try{
         const user_found = await User.findOne({email})
         if (!user_found) {
@@ -79,12 +79,56 @@ export const logout = (req, res) => {
     return res.status(200).json({message: "Log out"})
 }
 
-export const verifyUser = (req, res) => {
+export const verifyUser = async (req, res) => {
+    const storage = getStorage(app)
+    const {tel, social, description, id} = req.body
+
     try {
-        console.log(req)
-        return res.status(200).json({message: "Todo al 100"})
+        const imageUser = req.files["imageUser"][0]
+        const imageCredential = req.files["imageCredential"][0]
+        // img 1
+        const storageRef1 = ref(storage, `users/validate/${id}_user`)
+        await uploadBytes(storageRef1, imageUser.buffer, { contentType: imageUser.mimetype })
+        const linkImg1 = await getDownloadURL(storageRef1)
+        // img 2
+        const storageRef2 = ref(storage, `users/validate/${id}_credential`)
+        await uploadBytes(storageRef2, imageCredential.buffer, { contentType: imageCredential.mimetype })
+        const linkImg2 = await getDownloadURL(storageRef2)
+
+        const coincidence = await iaVerify(linkImg1, linkImg2)
+        const result = coincidence.data.resultado
+
+        if(result.includes("diferentes")) {
+            return res.status(500).json({
+                message: false
+            })
+        }else {
+            await User.findByIdAndUpdate(id, {
+                verified: true,
+                description: description,
+                tel: tel,
+                social: social
+            })
+            return res.status(200).json({
+                message: true
+            })
+        }
     }catch(error) {
         return res.status(500).json({error})
+    }
+}
+
+export const updateUserInfo = async (req, res) => {
+    const {id} = req.body
+    console.log(id)
+    try {
+        const userInfoUpdated = await User.findById(id).populate("image")
+        console.log(userInfoUpdated)
+        return res.status(200).json([userInfoUpdated])
+    }catch(error) {
+        return res.status(500).json(
+            []
+        )
     }
 }
 

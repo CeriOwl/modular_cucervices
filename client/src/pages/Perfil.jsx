@@ -39,7 +39,7 @@ export default function Perfil() {
     }, [])
   return (
     <main className='bg-[#01021C]'>
-        <Header />
+        
         <section className='py-12 grid justify-center text-white'>
             <div className='p-5 rounded-xl flex flex-col border items-center gap-y-4'>
                 <h1 className='font-black text-[3rem] text-center'>Bienvenido: {userData.name}</h1>
