@@ -1,5 +1,7 @@
 import { Router } from "express"
 import { login, logout, register, verifyToken, verifyUser, updateUserInfo } from "../controllers/auth.controller.js"
+import { updateClient } from "../controllers/cliente.controller.js"
+
 import {validateSchema} from "../middlewares/validator.middleware.js"
 import {loginSchema, registerSchema} from "../schemas/auth.schema.js"
 import multer from "multer"
@@ -15,5 +17,7 @@ router.post('/logout', logout)
 router.post('/verify-user', uploadImages, authRequired, verifyUser)
 router.post('/update-user-info', authRequired, updateUserInfo)
 router.get('/verify', verifyToken)
+
+router.post('/cliente/actualizar', upload.single('image'), authRequired, updateClient)
 
 export default router

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header.jsx'
 import { useAuth } from '../context/auth.context.jsx'
 import { Link } from 'react-router-dom'
 
@@ -31,6 +30,9 @@ export default function Perfil() {
             email: user.data.email,
             image: user.data.image.link,
             id: user.data._id,
+            description: user.data.description,
+            tel: user.data.tel,
+            social: user.data.social,
             creation: formatDates(user.data.createdAt),
             updated: formatDates(user.data.updatedAt),
             verified: formatVerified(user.data.verified)
@@ -41,7 +43,7 @@ export default function Perfil() {
     <main className='bg-[#01021C]'>
         
         <section className='py-12 grid justify-center text-white'>
-            <div className='p-5 rounded-xl flex flex-col border items-center gap-y-4'>
+            <div className='p-5 rounded-xl flex flex-col border items-center gap-y-4 max-w-[500px]'>
                 <h1 className='font-black text-[3rem] text-center'>Bienvenido: {userData.name}</h1>
                 <p className='font-bold italic text-[1.2rem]'>{userData.verified}</p>
                 <div className='w-[20rem] border rounded-full overflow-hidden'>
@@ -49,10 +51,20 @@ export default function Perfil() {
                 </div>
                 <div className='w-full text-[1.5rem] text-center'>
                     <p>Email: {userData.email}</p>
+                    {
+                        userData.verified ? 
+                        <div>
+                            <p>Descripción: {userData.description}</p>
+                            <p>Teléfono: +52 {userData.tel}</p>
+                            <a className='underline' href={userData.social} target="_blank" rel="noopener noreferrer">Red social</a>
+                        </div>
+                        :
+                        ""
+                    }
                     <p>Fecha de creación: {userData.creation}</p>
                     <p>Fecha de actualización: {userData.updated}</p>
                 </div>
-                <Link to="/update/profile" className=' bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors'>Actualizar mi información</Link>
+                <Link to="/update/profile" className='bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors'>Actualizar mi información</Link>
             </div>
         </section>
     </main>

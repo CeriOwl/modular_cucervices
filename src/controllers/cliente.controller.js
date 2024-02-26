@@ -19,7 +19,7 @@ export const registerProductService = (req, res) => {
 }
 
 const registerProduct = async (req, res, storage) => {
-    const {name, price, description, pieces} = req. body
+    const {name, price, description, pieces} = req.body
     try {
         const new_product = new Product({
             name,
@@ -39,7 +39,7 @@ const registerProduct = async (req, res, storage) => {
             message: "Producto registrado correctamente"
         })
     } catch(error){
-        res.status(500).json({ message: error.message })
+        res.status(500).json(["Error al registrar el producto"])
     }
 }
 
@@ -63,7 +63,7 @@ const registerService = async (req, res, storage) => {
             message: "Servicio registrado correctamente"
         })
     } catch(error){
-        res.status(500).json({ message: error.message })
+        res.status(500).json(["Error al registrar el servicio"])
     }
 }
 
@@ -74,9 +74,10 @@ export const getClient = async (req, res) => {
 
 export const updateClient = async (req, res) => {
     const {name, email, password, description, social, tel} = req.body
-    const image = req.file
     const storage = getStorage(app)
     try {
+        const image = req.file
+        console.log(image)
         //const client = await User.findByIdAndUpdate(req.user.id, req.body, {new: true})
         if(name) {
             await User.findByIdAndUpdate(req.user.id, { name })
@@ -90,8 +91,8 @@ export const updateClient = async (req, res) => {
         }
         if(image !== undefined) {
             const user = await User.findById(req.user.id)
-            const image = await Image.findById(user.image)
-            
+            const image = await Image.findById(user.image._id)
+            console.log("Enter")
             const storageRef = ref(storage, `users/${req.user.id}`)
             await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
             const get_link = await getDownloadURL(storageRef)

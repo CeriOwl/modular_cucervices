@@ -8,7 +8,10 @@ export const getProducts = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate('user').populate('image')
+    const product = await Product.findById(req.params.id).populate("image").populate("user").populate({
+      path: "user",
+      populate: "image"
+    })
     if(!product) {
       res.status(404).json({ message: "Producto no encontrado" })
     }else {

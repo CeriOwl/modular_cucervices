@@ -38,7 +38,7 @@ export default function Header() {
           {
             verified === false ? <Link to="/verificacion" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Verificación</Link>
             :
-            <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors' >Publicar</Link>
+            <Link to="/publicar" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors' >Publicar</Link>
           }
           <Link className="bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors" to='/servicios'>Servicios</Link>
           <Link className="bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors" to='/ventas'>Productos</Link>

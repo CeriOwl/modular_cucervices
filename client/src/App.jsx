@@ -9,6 +9,7 @@ import IndividualService from "./pages/IndividualService.jsx"
 import Verificacion from "./pages/Verificacion.jsx"
 import Perfil from "./pages/Perfil.jsx"
 import UpdateProfile from "./pages/UpdateProfile.jsx"
+import Post from "./pages/Post.jsx"
 import Error from "./pages/Error.jsx"
 import Header from "./components/Header.jsx"
 
@@ -17,7 +18,7 @@ function App() {
   return (
     <>
     {
-      pathname !== "/" ? <Header/> : ""
+      pathname !== "/" && pathname !== "/register" ? <Header/> : ""
     }
         <Routes>
           <Route path="/" element={<Login />} />
@@ -29,6 +30,7 @@ function App() {
           <Route path="/verificacion" element={<Verificacion />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/update/profile" element={<UpdateProfile />} />
+          <Route path="/publicar" element={<Post />} />
           <Route path="*" element={<Error />} />
         </Routes>
   </>

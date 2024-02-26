@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {registerUser, login, verifyTokenRequest, logOut, verifyUser, updateUserInfo} from "../api/auth.js"
+import {registerUser, login, verifyTokenRequest, logOut, verifyUser, updateUserInfo, updateUser, uploadContent} from "../api/auth.js"
 import Cookies from "js-cookie"
 
 export const AuthContext = createContext()
@@ -17,6 +17,8 @@ export const AuthProvider = ({children}) => {
     const [errorsSign, setErrorsSign] = useState([])
     const [errorsSignIn, setErrorsSignIn] = useState([])
     const [verification, setVerification] = useState(undefined)
+    const [errorsContent, setErrorsContent] = useState([])
+    const [isRegistered, setIsRegistered] = useState(undefined)
 
     const signUp = async (user) => {
         try {
@@ -65,6 +67,26 @@ export const AuthProvider = ({children}) => {
         }
     }
 
+    const UpdateDataUser = async userData => {
+        try {
+            const userUpdated = await updateUser(userData)
+            const newInfo = await updateUserInfo({id: user.data._id})
+            setUser({data: newInfo.data[0]})
+            console.log(userUpdated)
+        }catch(error) {
+            console.log(error)
+        }
+    }
+
+    const createProductService = async data => {
+        try {
+            const response = await uploadContent(data)
+            setIsRegistered(response.data.message)
+        }catch(error) {
+            setErrorsContent(error.response.data)
+        }
+    }
+
     useEffect(() => {
         async function checkLogin() {
             const cookies = Cookies.get()
@@ -94,7 +116,13 @@ export const AuthProvider = ({children}) => {
             errorsSign,
             errorsSignIn,
             verify,
-            verification
+            verification,
+            UpdateDataUser,
+            createProductService,
+            errorsContent,
+            setErrorsContent,
+            setIsRegistered,
+            isRegistered
         }}>
             {children}
         </AuthContext.Provider>

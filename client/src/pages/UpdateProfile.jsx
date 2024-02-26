@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Header from '../components/Header'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../context/auth.context'
 
@@ -14,7 +13,7 @@ export default function UpdateProfile() {
     phoneNumber: ""
   })
 
-  const {user} = useAuth()
+  const {user, UpdateDataUser} = useAuth()
   const {register, formState: {errors}, handleSubmit, setValue} = useForm()
 
   useEffect(() => {
@@ -40,8 +39,9 @@ export default function UpdateProfile() {
         <div className='border p-6 rounded-md'>
           <h1 className='text-white uppercase text-center font-black text-[1.7rem]'>Actualiza tu información</h1>
           <form className='text-white text-[1.2rem] flex flex-col gap-y-2' method="post"
-            onSubmit={handleSubmit(async () => {
-
+            onSubmit={handleSubmit(async (values) => {
+              values.image = values.image[0]
+              UpdateDataUser(values)
             })}
           >
             <div className='flex flex-col'>
@@ -64,7 +64,7 @@ export default function UpdateProfile() {
             </div>
             <div className='flex flex-col'>
               <label htmlFor="password">Contraseña</label>
-              <input className='text-black px-2 py-1 rounded-sm' type="password" name="" id=""/>
+              <input className='text-black px-2 py-1 rounded-sm' type="password" name="" id="" {...register("password")}/>
               {
                 errors.password && (
                   <p className="text-red-500">Ingrese un email</p>
