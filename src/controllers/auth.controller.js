@@ -149,3 +149,12 @@ export const verifyToken = (req, res) => {
         })
     })
 }
+
+export const getContacts = async (req, res) => {
+    try {
+        const contacts = await User.find({verified: true}).populate("image")
+        res.status(200).json(contacts)
+    }catch{
+        res.statu(500).json("Error obteniendo los contactos")
+    }
+}

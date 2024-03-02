@@ -1,7 +1,6 @@
 import axios from "../api/axios.js"
 import { useEffect, useState } from "react"
 import Product from "../components/Product.jsx"
-import Header from "../components/Header.jsx"
 import { useAuth } from "../context/auth.context.jsx"
 import { useNavigate } from "react-router-dom"
 
@@ -34,7 +33,7 @@ export default function Ventas() {
 
   return (
     <main className="bg-[#01021C]">
-      <div className="grid grid-cols-4 p-10 justify-items-center gap-12">
+      <div className="grid grid-cols-4 p-10 justify-items-center gap-x-12">
         {
           isProduct !== false ? products.map((product, index) => <Product data={product} key={index}/>) : ""
         }

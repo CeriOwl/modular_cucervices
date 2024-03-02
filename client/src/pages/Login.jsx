@@ -6,7 +6,7 @@ import Logo from "../assets/logoLogin.png";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { isAuthenticated, signIn, errorsSignIn } = useAuth();
+  const { isAuthenticated, signIn, errorsSignIn, setErrorsSignIn } = useAuth();
   const {
     register,
     handleSubmit,
@@ -14,6 +14,7 @@ export default function Login() {
   } = useForm();
 
   useEffect(() => {
+    setErrorsSignIn([])
     if (isAuthenticated) {
       navigate("/ventas");
     }

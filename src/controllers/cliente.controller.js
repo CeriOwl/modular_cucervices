@@ -77,8 +77,7 @@ export const updateClient = async (req, res) => {
     const storage = getStorage(app)
     try {
         const image = req.file
-        console.log(image)
-        //const client = await User.findByIdAndUpdate(req.user.id, req.body, {new: true})
+        
         if(name) {
             await User.findByIdAndUpdate(req.user.id, { name })
         }
@@ -113,6 +112,88 @@ export const updateClient = async (req, res) => {
     }catch(error) {
         res.json({
             message: error.message
+        })
+    }
+}
+
+export const productsPosted = async (req, res) => {
+    try {
+        const products = await Product.find({
+            user: req.user.id
+        }).populate("image")
+        const services = await Service.find({
+            user: req.user.id
+        }).populate("image")
+        const result = products.concat(services)
+        if(result.length > 0) {
+            res.status(200).json({
+                result
+            })
+        } else {
+            res.status(500).json({
+                message: "Productos o servicios no encontrados"
+            })
+        }
+    }catch {
+        res.status(500).json({
+            message: "Error obteniendo los datos"
+        })
+    }
+}
+
+export const productsPostedIndividual = async (req, res) => {
+    try {
+        const data = await Product.findById(req.params.id)
+        const data2 = await Service.findById(req.params.id)
+        if(data) {
+            res.status(200).json(data)
+        } else if(data2) {
+            res.status(200).json(data2)
+        }
+    }catch {
+        res.status(500).json({
+            message: "Error obteniendo los datos"
+        })
+    }
+}
+
+export const productsPostedIndividualUpdate = async (req, res) => {
+    const { name, description, price, pieces, id, imageId } = req.body
+    const storage = getStorage(app)
+    try {
+        const isProduct = await Product.findByIdAndUpdate(id, {
+            name, 
+            description,
+            price,
+            pieces
+        })
+
+        const isService = await Service.findByIdAndUpdate(id, {
+            name,
+            description,
+            price
+        })
+
+        if(isProduct) {
+            if(imageId) {
+                const storageRef = ref(storage, `products/${id}`)
+                await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
+                const get_link = await getDownloadURL(storageRef)
+                await Image.findByIdAndUpdate(imageId, { link: get_link }) 
+            }
+            res.status(200).json("Producto actualizado")
+        }else if(isService) {
+            if(imageId) {
+                const storageRef = ref(storage, `services/${id}`)
+                await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
+                const get_link = await getDownloadURL(storageRef)
+                await Image.findByIdAndUpdate(imageId, { link: get_link }) 
+            }
+            res.status(200).json("Servicio actualizado")
+        }
+    }catch {
+        res.status(500).json({
+            message: "Error obteniendo los datos"
         })
     }
 }

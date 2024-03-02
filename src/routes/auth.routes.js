@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { login, logout, register, verifyToken, verifyUser, updateUserInfo } from "../controllers/auth.controller.js"
-import { updateClient } from "../controllers/cliente.controller.js"
+import { login, logout, register, verifyToken, verifyUser, updateUserInfo, getContacts } from "../controllers/auth.controller.js"
+import { updateClient } from "../controllers/cliente.controller.js" 
 
 import {validateSchema} from "../middlewares/validator.middleware.js"
 import {loginSchema, registerSchema} from "../schemas/auth.schema.js"
@@ -19,5 +19,7 @@ router.post('/update-user-info', authRequired, updateUserInfo)
 router.get('/verify', verifyToken)
 
 router.post('/cliente/actualizar', upload.single('image'), authRequired, updateClient)
+
+router.get("/contacts", authRequired, getContacts)
 
 export default router

@@ -65,6 +65,9 @@ export default function Perfil() {
                     <p>Fecha de actualización: {userData.updated}</p>
                 </div>
                 <Link to="/update/profile" className='bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors'>Actualizar mi información</Link>
+                {
+                    userData.verified ? <Link to="/publicados" className='bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors'>Ver mis publicaciones</Link> : ""
+                }
             </div>
         </section>
     </main>

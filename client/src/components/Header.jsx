@@ -34,7 +34,7 @@ export default function Header() {
           <Link to="/perfil" title='Perfil'>
             <img className='w-24 border rounded-full aspect-square' src={imageUser} alt="" />
           </Link>
-          <Link to="/" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Contactos</Link>
+          <Link to="/contactos" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Contactos</Link>
           {
             verified === false ? <Link to="/verificacion" className='bg-[#457B9D] hover:bg-[#31587A] py-2 px-6 text-[1.2rem] rounded-md transition-colors'>Verificación</Link>
             :

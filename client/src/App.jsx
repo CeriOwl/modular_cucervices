@@ -1,5 +1,4 @@
 import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom"
-import { AuthProvider } from "./context/auth.context.jsx"
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
 import Ventas from "./pages/Ventas.jsx"
@@ -12,6 +11,9 @@ import UpdateProfile from "./pages/UpdateProfile.jsx"
 import Post from "./pages/Post.jsx"
 import Error from "./pages/Error.jsx"
 import Header from "./components/Header.jsx"
+import Posted from "./pages/Posted.jsx"
+import PostedIndividual from "./pages/PostedIndividual.jsx"
+import Contacts from "./pages/Contacts.jsx"
 
 function App() {
   const {pathname} = useLocation()
@@ -31,6 +33,9 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/update/profile" element={<UpdateProfile />} />
           <Route path="/publicar" element={<Post />} />
+          <Route path="/publicados" element={<Posted />} />
+          <Route path="/publicados/:id" element={<PostedIndividual />} />
+          <Route path="/contactos" element={<Contacts />} />
           <Route path="*" element={<Error />} />
         </Routes>
   </>

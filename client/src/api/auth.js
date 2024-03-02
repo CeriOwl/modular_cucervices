@@ -15,3 +15,5 @@ export const verifyTokenRequest = () => axios.get('/verify')
 
 // Product
 export const uploadContent = data => axios.post('/cliente/crear', data, {headers: {'content-type': 'multipart/form-data'}})
+
+export const updateContent = data => axios.post(`/cliente/products/update`, data, {headers: {'content-type': 'multipart/form-data'}})

@@ -8,4 +8,5 @@ router.get('/home-ventas/producto/:id', authRequired, getProduct)
 router.get("/home-ser", authRequired, getServices)
 router.get("/home-ser/servicios/:id", authRequired, getService)
 
+
 export default router

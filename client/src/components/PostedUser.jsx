@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 
@@ -14,14 +13,22 @@ export default function Service({ data }) {
         />
       </div>
       <p className="my-4 text-[1.2rem]">Descripción: {data.description}.</p>
-      <div className="flex gap-4 text-[1.2rem] w-full justify-center">
-        <p>Precio: ${data.price} c/u</p>
-      </div>
+      {
+        data.pieces ? 
+        <div className="flex gap-4 text-[1.2rem] w-full justify-center">
+          <p>Precio: ${data.price} c/u</p>
+          <p>Disponible: {data.pieces}</p>
+        </div>
+        :
+        <div className="flex gap-4 text-[1.2rem] w-full justify-center">
+          <p>Precio: ${data.price} por hora</p>
+        </div>
+      }
       <Link
         className="mt-8 text-[1.6rem] bg-[#31587A] hover:bg-[#457B9D] transition-colors w-full text-center rounded-lg py-2"
-        to={`/servicios/${data._id}`}
+        to={`/publicados/${data._id}`}
       >
-        Ver este servicio
+        Editar
       </Link>
     </div>
   );

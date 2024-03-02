@@ -1,0 +1,20 @@
+# Usa la imagen base de Python
+FROM python:3.9
+
+# Instala las dependencias de OpenCV
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia los archivos de código al contenedor
+COPY . /app
+
+# Instala las dependencias necesarias
+RUN pip install Flask requests tensorflow facenet-pytorch mtcnn opencv-python-headless Pillow
+
+# Expone el puerto 3000 para Flask
+EXPOSE 3000
+
+# Ejecuta la aplicación Flask cuando se inicia el contenedor
+CMD python ./app.py
