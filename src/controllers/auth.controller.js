@@ -96,13 +96,9 @@ export const verifyUser = async (req, res) => {
         const linkImg2 = await getDownloadURL(storageRef2)
 
         const coincidence = await iaVerify(linkImg1, linkImg2)
+        
         const result = coincidence.data.resultado
-
-        if(result.includes("diferentes")) {
-            return res.status(500).json({
-                message: false
-            })
-        }else {
+        if(result.includes("misma")) {
             await User.findByIdAndUpdate(id, {
                 verified: true,
                 description: description,
@@ -112,9 +108,13 @@ export const verifyUser = async (req, res) => {
             return res.status(200).json({
                 message: true
             })
+        }else {
+            return res.status(500).json({
+                message: false
+            })
         }
-    }catch(error) {
-        return res.status(500).json({error})
+    }catch {
+        return res.status(500).json({message: false})
     }
 }
 

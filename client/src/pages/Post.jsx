@@ -6,10 +6,11 @@ export default function Post() {
     const {
         register, handleSubmit, formState: { errors }, watch
     } = useForm()
-    const { createProductService, errorsContent, setErrorsContent, setIsRegistered, isRegistered } = useAuth()
+    const { createProductService, errorsContent, setErrorsContent, setIsRegistered, isRegistered, isLoading, setIsLoading} = useAuth()
     useEffect(() => {
         setErrorsContent([])
         setIsRegistered(undefined)
+        setIsLoading(false)
     }, [])
   return (
     <main className='bg-[#01021C] py-4'>
@@ -108,7 +109,13 @@ export default function Post() {
                 </>
                 }
                 <div>
-                    <button className='bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors' type="submit">Publicar</button>
+                    
+                    {
+                        !isLoading ? 
+                        <button className='bg-[#457B9D] w-full text-center font-bold hover:bg-[#31587A] py-2 px-6 text-[1.4rem] rounded-md transition-colors' type="submit">Publicar</button>
+                        : 
+                        <button disabled className='bg-gray-500 w-full transition-colors text-[1.1rem] py-2 rounded-lg text-white'>Publicando... Por favor espere</button>
+                    }
                 </div>
             </form>
         </section>

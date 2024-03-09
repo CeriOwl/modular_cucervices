@@ -10,7 +10,8 @@ export default function Perfil() {
         id: "",
         creation: "",
         updated: "",
-        verified: ""
+        verified: "",
+        isVerified: ""
     })
 
     const {user} = useAuth();
@@ -35,7 +36,8 @@ export default function Perfil() {
             social: user.data.social,
             creation: formatDates(user.data.createdAt),
             updated: formatDates(user.data.updatedAt),
-            verified: formatVerified(user.data.verified)
+            verified: formatVerified(user.data.verified),
+            isVerified: user.data.verified
         }
         setUserData(data)
     }, [])
@@ -52,7 +54,7 @@ export default function Perfil() {
                 <div className='w-full text-[1.5rem] text-center'>
                     <p>Email: {userData.email}</p>
                     {
-                        userData.verified ? 
+                        userData.isVerified ? 
                         <div>
                             <p>Descripción: {userData.description}</p>
                             <p>Teléfono: +52 {userData.tel}</p>

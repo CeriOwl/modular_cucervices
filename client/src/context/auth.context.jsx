@@ -21,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     const [isRegistered, setIsRegistered] = useState(undefined)
     const [isUpdated, setIsUpdated] = useState(undefined)
     const [errorsUpdate, setErrorsUpdated] = useState(undefined)
+    const [isLoading, setIsLoading] = useState(false)
 
     const signUp = async (user) => {
         try {
@@ -55,8 +56,10 @@ export const AuthProvider = ({ children }) => {
     }
 
     const verify = async (data) => {
+        setIsLoading(true)
         try {
             const res = await verifyUser(data)
+            setIsLoading(false)
             if (res.data.message) {
                 setVerification(true)
                 const newInfo = await updateUserInfo({ id: user.data._id })
@@ -65,36 +68,47 @@ export const AuthProvider = ({ children }) => {
                 setVerification(false)
             }
         } catch (error) {
-            console.log(error)
+            setIsLoading(false)
+            setVerification(false)
         }
     }
 
     const UpdateDataUser = async userData => {
+        setIsLoading(true)
         try {
             const userUpdated = await updateUser(userData)
             const newInfo = await updateUserInfo({ id: user.data._id })
+            setIsLoading(false)
             setUser({ data: newInfo.data[0] })
+            setIsUpdated(userUpdated.data.message)
             console.log(userUpdated)
         } catch (error) {
+            setIsLoading(false)
             console.log(error)
         }
     }
 
     const createProductService = async data => {
+        setIsLoading(true)
         try {
             const response = await uploadContent(data)
+            setIsLoading(false)
             setIsRegistered(response.data.message)
         } catch (error) {
+            setIsLoading(false)
             setErrorsContent(error.response.data)
         }
     }
 
     const updateProductService = async data => {
+        setIsLoading(false)
         try {
             const response = await updateContent(data)
+            setIsLoading(false)
             setIsUpdated(response.data)
         } catch (error) {
-            setErrorsUpdated(error.response.data.message)
+            setIsLoading(false)
+            setErrorsUpdated(error.response)
         }
     }
 
@@ -140,6 +154,8 @@ export const AuthProvider = ({ children }) => {
             setIsUpdated,
             errorsUpdate,
             setErrorsUpdated,
+            isLoading,
+            setIsLoading
         }}>
             {children}
         </AuthContext.Provider>

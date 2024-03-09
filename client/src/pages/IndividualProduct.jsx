@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "../api/axios.js";
 import { useParams } from "react-router-dom";
 import UnknownUser from "../assets/unknown.jpg"
-import Gmail from "../assets/gmail.png"
-import Whatsapp from "../assets/whatsapp.png"
 
 export default function IndividualProduct() {
   const params = useParams();
@@ -62,7 +60,7 @@ export default function IndividualProduct() {
           <div className="text-[1.5rem] flex flex-col w-full">
             <p>Tel: +52 {product.user.tel}</p>
             {
-              product.user.social !== "" ? <a className="text-center underline" href={product.user.social}>Click para ir a Red social</a> : ""
+              product.user.social !== "" ? <a target="_blank" className="text-center underline" href={product.user.social}>Click para ir a Red social</a> : ""
             }
           </div>
         </div>

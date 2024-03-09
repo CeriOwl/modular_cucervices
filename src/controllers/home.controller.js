@@ -15,7 +15,7 @@ export const getProduct = async (req, res) => {
     if(!product) {
       res.status(404).json({ message: "Producto no encontrado" })
     }else {
-      res.json(product)
+      res.status(200).json(product)
     }
   }catch(error){
     res.status(404).json({ message: "Producto no encontrado" })
@@ -29,8 +29,11 @@ export const getServices = async (req, res) => {
 
 export const getService = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id).populate('user').populate('image')
-    res.json(service)
+    const service = await Service.findById(req.params.id).populate('image').populate('user').populate({
+      path: "user",
+      populate: "image"
+    })
+    res.status(200).json(service)
   }catch(error){
     res.status(404).json({ message: "Servicio no encontrado" })
   }

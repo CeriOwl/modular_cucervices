@@ -13,10 +13,12 @@ export default function UpdateProfile() {
     phoneNumber: ""
   })
 
-  const {user, UpdateDataUser} = useAuth()
+  const {user, UpdateDataUser, isLoading, setIsLoading, isUpdated, setIsUpdated} = useAuth()
   const {register, formState: {errors}, handleSubmit, setValue} = useForm()
 
   useEffect(() => {
+    setIsLoading(false)
+    setIsUpdated(undefined)
     const loadInfo = () => {
       setValue("name", user.data.name)
       setValue("email", user.data.email)
@@ -44,6 +46,12 @@ export default function UpdateProfile() {
               UpdateDataUser(values)
             })}
           >
+            {
+              isUpdated ? 
+              <div className='w-full bg-green-500 p-2 text-white rounded-sm'>{isUpdated}</div>
+              :
+              ""
+            }
             <div className='flex flex-col'>
               <label htmlFor="name">Nombre</label>
               <input className='text-black px-2 py-1 rounded-sm' type="text" name="name" id="name" {...register("name")} />
@@ -94,7 +102,13 @@ export default function UpdateProfile() {
               ""
             }
             <div className=''>
-              <button className='w-full bg-[#457B9D] hover:bg-[#31587A] py-1 px-6 text-[1.2rem] rounded-md transition-colors'>Actualizar</button>
+              {
+                !isLoading ? 
+                <button className='w-full bg-[#457B9D] hover:bg-[#31587A] py-1 px-6 text-[1.2rem] rounded-md transition-colors'>Actualizar</button>
+                :
+                <button disabled className='bg-gray-500 w-full transition-colors text-[1.1rem] py-2 rounded-lg text-white'>Actualizando... Por favor espere</button>
+              }
+                
             </div>
           </form>
         </div>

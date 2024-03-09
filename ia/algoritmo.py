@@ -22,9 +22,20 @@ face1 = extract_face(image1, boxes1[0])
 face2 = extract_face(image2, boxes2[0])
 
 if boxes1 is None or len(boxes1) == 0:
-    print("No se detectaron caras en la 1er imagen.")
+    resultado = "No se detectaron caras en la 1er imagen"
+    with open('resultado.txt', 'w') as archivo:
+            # Escribe el texto en el archivo
+            archivo.write(resultado)
 elif boxes2 is None or len(boxes2) == 0:
-    print("No se detectaron caras en la 2da imagen.")
+    resultado = "No se detectaron caras en la 2da imagen"
+    with open('resultado.txt', 'w') as archivo:
+            # Escribe el texto en el archivo
+            archivo.write(resultado)
+elif (boxes1 is None or len(boxes1) == 0) and (boxes2 is None or len(boxes2) == 0):
+    resultado = "No se detectaron caras en ninguna de las imagenes"
+    with open('resultado.txt', 'w') as archivo:
+            # Escribe el texto en el archivo
+            archivo.write(resultado)
 else:
     # Extrae las características faciales de las caras recortadas
     features1 = resnet(face1.unsqueeze(0))

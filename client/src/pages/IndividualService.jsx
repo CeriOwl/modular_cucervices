@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../api/axios.js";
 import { useParams } from "react-router-dom";
-import Header from "../components/Header.jsx";
 import UnknownUser from "../assets/unknown.jpg"
-import Gmail from "../assets/gmail.png"
-import Whatsapp from "../assets/whatsapp.png"
 
 export default function IndividualService() {
   const params = useParams();
@@ -14,8 +11,13 @@ export default function IndividualService() {
     price: "",
     pieces: "",
     user: {
-        name: "",
-        email: ""
+      name: "",
+      email: "",
+      image: {
+        link: UnknownUser
+      },
+      social: "",
+      tel: ""
     }
   });
   useEffect(() => {
@@ -24,14 +26,14 @@ export default function IndividualService() {
         `http://localhost:3000/api/home-ser/servicios/${params.id}`
       );
       console.log(serviceData.data);
-      setService(serviceData.data); 
+      setService(serviceData.data);
     }
     getService();
   }, []);
 
   return (
     <main className="bg-[#01021C] h-screen">
-      <div className="text-white grid grid-cols-2 justify-items-center items-center mt-12">
+      <div className="text-white grid grid-cols-2 justify-items-center items-center pt-12">
         <div className="flex flex-col border rounded-md items-center p-6">
           <h2 className="uppercase font-bold text-[2.7rem]">Servicio</h2>
           <div className="flex flex-col items-center">
@@ -42,26 +44,24 @@ export default function IndividualService() {
             <div className="flex flex-col gap-2 text-[1.5rem]">
               <p>Nombre: {service.name}</p>
               <p>Descripción: {service.description}</p>
-              <p>Precio: ${service.price}</p>
+              <p>Precio: ${service.price} por hora</p>
             </div>
           </div>
         </div>
-        <div className="border rounded-md flex flex-col items-center p-6">
-          <h2 className="uppercase font-bold text-[2.7rem]">Contacto</h2>
+        <div className="border rounded-md flex flex-col p-6">
+          <h2 className="uppercase font-bold text-[2.7rem] text-center">Contacto</h2>
           <div className="w-[20rem]">
-            <img className="w-full h-auto aspect-square rounded-full" src={UnknownUser} alt="" />
+            <img className="w-full h-auto aspect-square rounded-full" src={service.user.image.link} alt="" />
           </div>
           <div className="text-[1.5rem]">
             <p>Nombre: {service.user.name}</p>
             <p>Email: {service.user.email}</p>
           </div>
-          <div className="flex gap-10">
-            <div className="w-16">
-              <img className="w-full cursor-pointer" src={Gmail} alt="" />
-            </div>
-            <div className="w-16">
-              <img className="w-full cursor-pointer" src={Whatsapp} alt="" />
-            </div>
+          <div className="text-[1.5rem] flex flex-col w-full">
+            <p>Tel: +52 {service.user.tel}</p>
+            {
+              service.user.social !== "" ? <a target="_blank" className="text-center underline" href={service.user.social}>Click para ir a Red social</a> : ""
+            }
           </div>
         </div>
       </div>
