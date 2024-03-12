@@ -33,7 +33,7 @@ export default function Servicio() {
   return (
     <main className="bg-[#01021C]">
       
-      <div className="grid grid-cols-4 p-10 justify-items-center gap-12">
+      <div className="grid grid-cols-3 p-10 justify-items-center gap-7">
         {
           isService ? services.map((service, index) => <Service data={service} key={index}/>)
           : ""

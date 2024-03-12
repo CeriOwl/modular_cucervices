@@ -197,3 +197,13 @@ export const productsPostedIndividualUpdate = async (req, res) => {
         })
     }
 }
+
+export const deletePosted = async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id)
+        await Service.findByIdAndDelete(req.params.id)
+        res.status(200).json(true)
+    }catch {
+        res.status(400).json(false)
+    }
+}

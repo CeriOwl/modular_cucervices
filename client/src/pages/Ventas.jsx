@@ -33,7 +33,7 @@ export default function Ventas() {
 
   return (
     <main className="bg-[#01021C]">
-      <div className="grid grid-cols-4 p-10 justify-items-center gap-x-12">
+      <div className="grid grid-cols-3 p-10 justify-items-center gap-7">
         {
           isProduct !== false ? products.map((product, index) => <Product data={product} key={index}/>) : ""
         }

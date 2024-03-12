@@ -36,8 +36,8 @@ export default function UpdateProfile() {
   }, [])
 
   return (
-    <main className='bg-[#01021C] h-screen'>
-      <section className='grid justify-center pt-6'>
+    <main className='bg-[#01021C]'>
+      <section className='grid justify-center py-6'>
         <div className='border p-6 rounded-md'>
           <h1 className='text-white uppercase text-center font-black text-[1.7rem]'>Actualiza tu información</h1>
           <form className='text-white text-[1.2rem] flex flex-col gap-y-2' method="post"

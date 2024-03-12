@@ -1,7 +1,21 @@
 import { Link } from "react-router-dom";
-
+import axios from "../api/axios.js"
+import { useNavigate } from "react-router-dom"
 
 export default function Service({ data }) {
+  const navigation = useNavigate();
+  const deleteD = async () => {
+    await axios.post(`http://localhost:3000/api/delete/${data._id}`)
+  }
+
+  const deleteProduct = async () => {
+    try {
+      deleteD()
+      navigation("/")
+    }catch(error) {
+      console.log(error)
+    }
+  }
   return (
     <div className="text-white border flex flex-col items-center p-6 rounded-xl">
       <p className="font-bold text-[2rem] mb-4 text-center">{data.name}</p>
@@ -30,6 +44,11 @@ export default function Service({ data }) {
       >
         Editar
       </Link>
+      <button className="mt-8 text-[1.6rem] bg-red-500 hover:bg-red-800 transition-colors w-full text-center rounded-lg py-2"
+        onClick={deleteProduct}
+      >
+        Eliminar
+      </button>
     </div>
   );
 }

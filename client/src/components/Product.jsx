@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function Product({data}) {
     
   return (
-        <div className='text-white border flex flex-col items-center p-6 rounded-xl'>
+        <div className='text-white border max-w-[22rem] flex flex-col items-center p-6 rounded-xl'>
             <p className='font-bold text-[2rem] mb-4 text-center'>{data.name}</p>
             <div className='w-[20rem]'>
                 <img className='w-full h-auto aspect-square' src={data.image.link} alt="" />
