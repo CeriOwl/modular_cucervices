@@ -10,13 +10,21 @@ import { iaVerify } from "../../client/src/api/ia.js";
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
+    const regex = /^[a-zA-Z]+\.[a-zA-Z]+\d{4}@alumnos.udg.mx$/
     // storage Firebase
     const storage = getStorage(app)
     try{
         const user_found = await User.findOne({email})
         if (user_found) {
             return res.status(400).json({
-                error: "Email en uso"
+                error: ["Email en uso"]
+            })
+        }
+
+        if(!regex.test(email)) {
+            regex.test(email)
+            return res.status(400).json({
+                error: ["Email no perteneciente a UdG"]
             })
         }
 
