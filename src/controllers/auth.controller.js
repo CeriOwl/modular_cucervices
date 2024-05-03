@@ -6,11 +6,11 @@ import app from "../firebase/config.js";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage"
 import jwt from "jsonwebtoken";
 import {SECRET_KEY} from "../config.js"
-import { iaVerify } from "../../client/src/api/ia.js";
+import { iaVerify } from "../libs/ia.js";
 
 export const register = async (req, res) => {
     const {name, email, password} = req.body
-    const regex = /^[a-zA-Z]+\.[a-zA-Z]+\d{4}@alumnos.udg.mx$/
+    const regex = /^[a-z]+\.[a-z]+\d{4}@alumnos.udg.mx$/
     // storage Firebase
     const storage = getStorage(app)
     try{
