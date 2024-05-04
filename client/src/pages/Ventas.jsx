@@ -13,7 +13,7 @@ export default function Ventas() {
 
   useEffect(() => {
     async function handleData() {
-      const productsData = await axios.get("http://localhost:3000/api/home-ventas")
+      const productsData = await axios.get("https://modular-cucervices.onrender.com/api/home-ventas")
       console.log(productsData.data)
       if(productsData.data.length > 0) {
         setProducts(productsData.data)

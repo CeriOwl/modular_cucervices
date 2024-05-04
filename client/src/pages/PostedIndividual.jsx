@@ -13,7 +13,7 @@ export default function PostedIndividual() {
 
     useEffect(() => {
         const getData = async () => {
-            const data = await axios.get(`http://localhost:3000/api/cliente/products/${params.id}`)
+            const data = await axios.get(`https://modular-cucervices.onrender.com/api/cliente/products/${params.id}`)
             console.log(data)
             setPieces(data.data.pieces)
             setValue("name", data.data.name)

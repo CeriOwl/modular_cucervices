@@ -23,7 +23,7 @@ export default function IndividualService() {
   useEffect(() => {
     async function getService() {
       const serviceData = await axios.get(
-        `http://localhost:3000/api/home-ser/servicios/${params.id}`
+        `https://modular-cucervices.onrender.com/api/home-ser/servicios/${params.id}`
       );
       console.log(serviceData.data);
       setService(serviceData.data);

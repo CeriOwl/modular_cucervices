@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 export default function Service({ data }) {
   const navigation = useNavigate();
   const deleteD = async () => {
-    await axios.post(`http://localhost:3000/api/delete/${data._id}`)
+    await axios.post(`https://modular-cucervices.onrender.com/api/delete/${data._id}`)
   }
 
   const deleteProduct = async () => {

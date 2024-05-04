@@ -13,7 +13,7 @@ export default function Servicio() {
 
   useEffect(() => {
     async function handleData() {
-      const servicesData = await axios.get("http://localhost:3000/api/home-ser")
+      const servicesData = await axios.get("https://modular-cucervices.onrender.com/api/home-ser")
       console.log(servicesData)
       if(servicesData.data.length > 0) {
         setServices(servicesData.data)

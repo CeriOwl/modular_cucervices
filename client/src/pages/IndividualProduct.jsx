@@ -23,7 +23,7 @@ export default function IndividualProduct() {
   useEffect(() => {
     async function getProduct() {
       const productData = await axios.get(
-        `http://localhost:3000/api/home-ventas/producto/${params.id}`
+        `https://modular-cucervices.onrender.com/api/home-ventas/producto/${params.id}`
       );
       setProduct(productData.data);
       console.log(productData.data)

@@ -5,7 +5,7 @@ export default function Contacts() {
     const [contacts, setContacts] = useState([])
     useEffect(() => {
         const useGetContacts = async () => {
-            const contacts = await axios.get("http://localhost:3000/api/contacts")
+            const contacts = await axios.get("https://modular-cucervices.onrender.com/api/contacts")
             console.log(contacts.data)
             setContacts(contacts.data)
         }
