@@ -9,7 +9,7 @@ import cors from "cors"
 const app = express()
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://modular-cucervices-front.onrender.com",
     credentials: true,
 }))
 app.use(morgan("dev"))
