@@ -6,11 +6,11 @@ import multer from "multer"
 const router = Router()
 const upload = multer({storage: multer.memoryStorage()})
 
-router.post('/cliente/crear', authRequired, upload.single('image'), registerProductService)
-router.get('/cliente', authRequired, getClient)
-router.get("/cliente/products", authRequired, productsPosted)
-router.get("/cliente/products/:id", authRequired, productsPostedIndividual)
-router.post("/cliente/products/update", upload.single('image'), authRequired, productsPostedIndividualUpdate)
-router.post("/delete/:id", authRequired, deletePosted)
+router.post('/cliente/crear', upload.single('image'), registerProductService)
+router.get('/cliente', getClient)
+router.get("/cliente/products", productsPosted)
+router.get("/cliente/products/:id", productsPostedIndividual)
+router.post("/cliente/products/update", upload.single('image'), productsPostedIndividualUpdate)
+router.post("/delete/:id", deletePosted)
 
 export default router
