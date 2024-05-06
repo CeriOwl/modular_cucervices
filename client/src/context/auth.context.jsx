@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoading(true)
         try {
             const userUpdated = await updateUser(userData)
+            console.log(user.data)
             const newInfo = await updateUserInfo({ id: user.data._id })
             setIsLoading(false)
             setUser({ data: newInfo.data[0] })
