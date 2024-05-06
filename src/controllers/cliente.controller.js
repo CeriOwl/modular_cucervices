@@ -74,7 +74,6 @@ export const getClient = async (req, res) => {
 
 export const updateClient = async (req, res) => {
     const {name, email, password, description, social, tel} = req.body
-    console.log(req.user.id)
     const storage = getStorage(app)
     try {
         const image = req.file
