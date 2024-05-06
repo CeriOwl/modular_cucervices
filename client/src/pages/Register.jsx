@@ -1,7 +1,7 @@
 import Logo from "../assets/logoLogin.png";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../context/auth.context";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -13,10 +13,13 @@ export default function Register() {
 
   const { signUp, isAuthenticated, errorsSign } = useAuth();
   const navigate = useNavigate();
+  const [sended, setSended] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
+    }else {
+      setSended(false)
     }
   }, [isAuthenticated]);
 
@@ -34,7 +37,7 @@ export default function Register() {
             <form
             className="flex flex-col gap-4 w-full"
               onSubmit={handleSubmit(async (values) => {
-                console.log(values)
+                setSended(true)
                 values.image = values.image[0];
                 await signUp(values);
               })}
@@ -84,9 +87,16 @@ export default function Register() {
                   <p className="text-red-500">Ingrese una imagen</p>
                 )}
               </div>
-              <button className="bg-[#31587A] hover:bg-[#A8DADC] transition-colors text-[1.5rem] rounded-lg text-white hover:text-[#01021C]">
-                Registrarse
-              </button>
+              {
+                !sended ?
+                <button className="bg-[#31587A] hover:bg-[#A8DADC] transition-colors text-[1.5rem] rounded-lg text-white hover:text-[#01021C]">
+                  Registrarse
+                </button>
+                :
+                <button disabled className="bg-gray-500 transition-colors text-[1.5rem] rounded-lg text-white">
+                  Registrando...
+                </button>
+              }
             </form>
           </div>
           <div className="text-white">
