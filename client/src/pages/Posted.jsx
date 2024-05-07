@@ -9,7 +9,8 @@ export default function Posted() {
     useEffect(() => {
       async function getData() {
         try{
-          const data = await axios.get("https://modular-cucervices.onrender.com/api/cliente/products", {id: user.data._id})
+          const id = {id: user.data._id}
+          const data = await axios.get("https://modular-cucervices.onrender.com/api/cliente/products", id)
           setData(data.data.result)
         }catch(error){
           console.log(error)

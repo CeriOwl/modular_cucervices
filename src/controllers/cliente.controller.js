@@ -119,12 +119,15 @@ export const updateClient = async (req, res) => {
 export const productsPosted = async (req, res) => {
     const {id} = req.body
     try {
+        console.log(req.body)
         const products = await Product.find({
             user: id
         }).populate("image")
+        console.log(products)
         const services = await Service.find({
             user: id
         }).populate("image")
+        console.log(services)
         const result = products.concat(services)
         if(result.length > 0) {
             res.status(200).json({
