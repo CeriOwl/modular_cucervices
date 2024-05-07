@@ -10,7 +10,7 @@ export default function Posted() {
       async function getData() {
         try{
           const id = {id: user.data._id}
-          const data = await axios.get("https://modular-cucervices.onrender.com/api/cliente/products", id)
+          const data = await axios.post("https://modular-cucervices.onrender.com/api/cliente/products", id)
           setData(data.data.result)
         }catch(error){
           console.log(error)
