@@ -117,12 +117,13 @@ export const updateClient = async (req, res) => {
 }
 
 export const productsPosted = async (req, res) => {
+    const {id} = req.body
     try {
         const products = await Product.find({
-            user: req.user.id
+            user: id
         }).populate("image")
         const services = await Service.find({
-            user: req.user.id
+            user: id
         }).populate("image")
         const result = products.concat(services)
         if(result.length > 0) {

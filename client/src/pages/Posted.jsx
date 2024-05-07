@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import axios from "../api/axios.js"
 import PostedUser from "../components/PostedUser.jsx"
+import { useAuth } from '../context/auth.context.jsx'
 
 export default function Posted() {
+  const {user} = useAuth();
   const [data, setData] = useState([])
     useEffect(() => {
       async function getData() {
         try{
-          const data = await axios.get("https://modular-cucervices.onrender.com/api/cliente/products")
+          const data = await axios.get("https://modular-cucervices.onrender.com/api/cliente/products", {id: user.data._id})
           setData(data.data.result)
         }catch(error){
           console.log(error)

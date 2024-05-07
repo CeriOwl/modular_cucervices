@@ -7,7 +7,6 @@ export default function Contacts() {
     useEffect(() => {
         const useGetContacts = async () => {
             const contacts = await axios.get("https://modular-cucervices.onrender.com/api/contacts")
-            console.log(contacts.data)
             setContacts(contacts.data)
         }
         useGetContacts()
