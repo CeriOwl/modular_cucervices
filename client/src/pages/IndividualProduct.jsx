@@ -35,7 +35,7 @@ export default function IndividualProduct() {
   return (
     <main className="bg-[#01021C]">
       <div className="text-white grid grid-cols-2 justify-items-center items-center py-12">
-        <div className="flex flex-col border rounded-md items-center p-6">
+        <div className="max-w-[450px] flex flex-col border rounded-md items-center p-6">
           <h2 className="uppercase font-bold text-[2.7rem]">Producto</h2>
           <div className="flex flex-col items-center">
             <p className="text-center text-[0.7rem]">{product._id}</p>
