@@ -12,7 +12,6 @@ export default function Register() {
   } = useForm();
 
   const { signUp, isAuthenticated, errorsSign} = useAuth();
-  console.log(user.data._id)
   const navigate = useNavigate();
   const [sended, setSended] = useState(false)
 
