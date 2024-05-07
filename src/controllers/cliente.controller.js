@@ -119,6 +119,7 @@ export const updateClient = async (req, res) => {
 export const productsPosted = async (req, res) => {
     const {id} = req.body
     try {
+        console.log("This is the id", id)
         const products = await Product.find({
             user: id
         }).populate("image")
