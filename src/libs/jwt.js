@@ -4,10 +4,12 @@ import jwt from "jsonwebtoken"
 export function createAccessToken(payload) {
     return new Promise((resolve, reject) => {
         jwt.sign(
-            payload, 
+            payload,
             SECRET_KEY,
             {
-                expiresIn: "1d"
+                expiresIn: "1d",
+                sameSite: "none",
+                secure: true
             },
             (err, token) => {
                 if(err) {
