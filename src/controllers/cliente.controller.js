@@ -117,7 +117,6 @@ export const updateClient = async (req, res) => {
 }
 
 export const productsPosted = async (req, res) => {
-    console.log(req.user.id)
     try {
         const products = await Product.find({
             user: req.user.id
