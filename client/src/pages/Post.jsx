@@ -6,7 +6,7 @@ export default function Post() {
     const {
         register, handleSubmit, formState: { errors }, watch
     } = useForm()
-    const { createProductService, errorsContent, setErrorsContent, setIsRegistered, isRegistered, isLoading, setIsLoading} = useAuth()
+    const { createProductService, errorsContent, setErrorsContent, setIsRegistered, isRegistered, isLoading, setIsLoading, user} = useAuth()
     useEffect(() => {
         setErrorsContent([])
         setIsRegistered(undefined)
@@ -21,6 +21,7 @@ export default function Post() {
                 onSubmit={handleSubmit(async (values) => {
                     console.log(values)
                     values.image = values.image[0]
+                    values.id = user.data._id
                     createProductService(values)
                 })}
             >  

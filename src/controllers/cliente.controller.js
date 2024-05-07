@@ -19,14 +19,14 @@ export const registerProductService = (req, res) => {
 }
 
 const registerProduct = async (req, res, storage) => {
-    const {name, price, description, pieces} = req.body
+    const {id, name, price, description, pieces} = req.body
     try {
         const new_product = new Product({
             name,
             description,
             price,
             pieces,
-            user: req.user.id
+            user: id
         })
         const product_saved = await new_product.save()
         const storageRef = ref(storage, `products/${product_saved._id}`)
@@ -44,13 +44,13 @@ const registerProduct = async (req, res, storage) => {
 }
 
 const registerService = async (req, res, storage) => {
-    const {name, price, description} = req. body
+    const {id, name, price, description} = req. body
     try {
         const new_service = new Service({
             name,
             description,
             price,
-            user: req.user.id
+            user: id
         })
         const service_saved = await new_service.save()
         const storageRef = ref(storage, `services/${service_saved._id}`)
@@ -73,38 +73,38 @@ export const getClient = async (req, res) => {
 }
 
 export const updateClient = async (req, res) => {
-    const {name, email, password, description, social, tel} = req.body
+    const {id, name, email, password, description, social, tel} = req.body
     const storage = getStorage(app)
     try {
         const image = req.file
         
         if(name) {
-            await User.findByIdAndUpdate(req.user.id, { name })
+            await User.findByIdAndUpdate(id, { name })
         }
         if(email) {
-            await User.findByIdAndUpdate(req.user.id, { email })
+            await User.findByIdAndUpdate(id, { email })
         }
         if(password !== '') {
             const password_enctyped = await bcrypt.hash(password, 10)
-            await User.findByIdAndUpdate(req.user.id, { password: password_enctyped })
+            await User.findByIdAndUpdate(id, { password: password_enctyped })
         }
         if(image !== undefined) {
-            const user = await User.findById(req.user.id)
+            const user = await User.findById(id)
             const image = await Image.findById(user.image._id)
             console.log("Enter")
-            const storageRef = ref(storage, `users/${req.user.id}`)
+            const storageRef = ref(storage, `users/${id}`)
             await uploadBytes(storageRef, req.file.buffer, { contentType: req.file.mimetype })
             const get_link = await getDownloadURL(storageRef)
             await Image.findByIdAndUpdate(image._id, { link: get_link })
         }
         if(description !== '' || description !== undefined) {
-            await User.findByIdAndUpdate(req.user.id, { description })
+            await User.findByIdAndUpdate(id, { description })
         }
         if(social !== '' || social !== undefined) {
-            await User.findByIdAndUpdate(req.user.id, { social })
+            await User.findByIdAndUpdate(id, { social })
         }
         if(tel !== '' || tel !== undefined) {
-            await User.findByIdAndUpdate(req.user.id, { tel })
+            await User.findByIdAndUpdate(id, { tel })
         }
         res.json({
             message: "Usuario actualizado correctamente"
@@ -119,7 +119,6 @@ export const updateClient = async (req, res) => {
 export const productsPosted = async (req, res) => {
     const {id} = req.body
     try {
-        console.log(req.body)
         const products = await Product.find({
             user: id
         }).populate("image")

@@ -20,6 +20,7 @@ export default function UpdateProfile() {
     setIsLoading(false)
     setIsUpdated(undefined)
     const loadInfo = () => {
+      setValue("id", user.data._id)
       setValue("name", user.data.name)
       setValue("email", user.data.email)
       if(user.data.description) {

@@ -8,7 +8,7 @@ const upload = multer({storage: multer.memoryStorage()})
 
 router.post('/cliente/crear', upload.single('image'), registerProductService)
 router.get('/cliente', getClient)
-router.get("/cliente/products", productsPosted)
+router.post("/cliente/products", productsPosted)
 router.get("/cliente/products/:id", productsPostedIndividual)
 router.post("/cliente/products/update", upload.single('image'), productsPostedIndividualUpdate)
 router.post("/delete/:id", deletePosted)
