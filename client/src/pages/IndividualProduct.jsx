@@ -33,7 +33,7 @@ export default function IndividualProduct() {
   }, []);
 
   return (
-    <main className="bg-[#01021C]">
+    <main className="bg-[#01021C] h-screen">
       <div className="text-white grid grid-cols-2 justify-items-center items-center py-12">
         <div className="max-w-[450px] flex flex-col border rounded-md items-center p-6">
           <h2 className="uppercase font-bold text-[2.7rem]">Producto</h2>
