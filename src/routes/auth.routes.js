@@ -14,12 +14,12 @@ const uploadImages = upload.fields([{name: "imageUser", maxCount: 1}, {name: "im
 router.post('/register', upload.single('image'), validateSchema(registerSchema), register)
 router.post('/login', validateSchema(loginSchema), login)
 router.post('/logout', logout)
-router.post('/verify-user', uploadImages, verifyUser)
-router.post('/update-user-info', updateUserInfo)
+router.post('/verify-user', uploadImages, authRequired, verifyUser)
+router.post('/update-user-info', authRequired, updateUserInfo)
 router.get('/verify', verifyToken)
 
-router.post('/cliente/actualizar', upload.single('image'), updateClient)
+router.post('/cliente/actualizar', upload.single('image'), authRequired, updateClient)
 
-router.get("/contacts", getContacts)
+router.get("/contacts", authRequired, getContacts)
 
 export default router
