@@ -44,7 +44,7 @@ export default function IndividualProduct() {
             </div>
             <div className="flex flex-col gap-2 text-[1.5rem]">
               <p>Nombre: {product.name}</p>
-              <p>Descripción: {product.description}</p>
+              <p>Descripción: {product.description}.</p>
               <p>Precio: ${product.price}</p>
               <p>Disponible: {product.pieces}</p>
             </div>
