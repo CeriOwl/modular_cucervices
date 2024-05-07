@@ -34,7 +34,7 @@ export default function IndividualService() {
   return (
     <main className="bg-[#01021C] h-screen">
       <div className="text-white grid grid-cols-2 justify-items-center items-center pt-12">
-        <div className="flex flex-col border rounded-md items-center p-6">
+        <div className="max-w-[450px] flex flex-col border rounded-md items-center p-6">
           <h2 className="uppercase font-bold text-[2.7rem]">Servicio</h2>
           <div className="flex flex-col items-center">
             <p className="text-center text-[0.7rem]">{service._id}</p>
@@ -48,7 +48,7 @@ export default function IndividualService() {
             </div>
           </div>
         </div>
-        <div className="border rounded-md flex flex-col p-6">
+        <div className="border rounded-md items-center flex flex-col p-6">
           <h2 className="uppercase font-bold text-[2.7rem] text-center">Contacto</h2>
           <div className="w-[20rem]">
             <img className="w-full h-auto aspect-square rounded-full" src={service.user.image.link} alt="" />
